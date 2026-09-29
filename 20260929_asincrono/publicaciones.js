@@ -1,6 +1,6 @@
 console.log("Publicando");
-fetch("https://jsonplaceholder.typicode.com/posts")
+fetch("https://jsonplaceholder.typicode.com/photo")
   .then((response) => response.json())
-  .then((json) => console.log(json));
-
-//muestra el title en un ul en la pagina HTML
+  .then(
+    (j) => (listado.innerHTML = j.map((photo) => `<li><img>${photo.title}</li>`)), //muestra el title en el ul de la pagina
+  );
