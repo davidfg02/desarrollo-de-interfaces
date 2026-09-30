@@ -1,0 +1,7 @@
+{
+  "name": "corporateAppDavid",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
