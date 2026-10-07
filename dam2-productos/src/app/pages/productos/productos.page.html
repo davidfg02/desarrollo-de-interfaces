@@ -1,73 +1,67 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/inicio">
-      </ion-back-button>
-    </ion-buttons>
-    <ion-title>
-      Productos
-    </ion-title>
-    <ion-buttons slot="start">
       <ion-back-button defaultHref="/inicio"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Productos</ion-title>
+    <ion-buttons slot="end">
+      <app-theme-toggle />
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
+
 <ion-content class="ion-padding">
   <h1>Listado de productos</h1>
-  <!-- @if (loading) {
-  <div class="loading">
-    <ion-spinner></ion-spinner>
-    <p>
-      Cargando productos...
-    </p>
-  </div>
-  } -->
+
+  @if (loading) {
+    <div class="loading">
+      <ion-spinner></ion-spinner>
+      <p>Cargando productos...</p>
+    </div>
+  }
 
   @if (error) {
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>
-        Error
-      </ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <p>
-        {{ error }}
-      </p>
-      <ion-button (click)="loadProducts()">
-        Reintentar
-      </ion-button>
-    </ion-card-content>
-  </ion-card>
-  }
-  @if (!loading && !error) {
-  <p>
-    Productos cargados:
-    <strong>{{ products.length }}</strong>
-  </p>
-  <div class="grid">
-    @for (product of products(); track product.id) {
-    <ion-card class="product-card">
-      <img [src]="product.thumbnail" [alt]="product.title" />
+    <ion-card>
       <ion-card-header>
-        <ion-card-subtitle>
-          {{ product.brand || 'Sin marca' }} · {{ product.category }}
-        </ion-card-subtitle>
-        <ion-card-title>{{ product.title }}</ion-card-title>
+        <ion-card-title>Error</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <p class="price">{{ product.price | currency:'EUR' }}</p>
-        <p>⭐ {{ product.rating }} · Stock: {{ product.stock }}</p>
+        <p>{{ error }}</p>
+        <ion-button (click)="loadProducts()">Reintentar</ion-button>
       </ion-card-content>
     </ion-card>
-    }
-  </div>
-  <div class="pagination">
-      <ion-button fill="outline" [disabled]="page() === 1" (click)="goToPage(page() - 1)">
+  }
+
+  @if (!loading && !error) {
+    <p>
+      Mostrando <strong>{{ products.length }}</strong> de
+      <strong>{{ total }}</strong> productos
+    </p>
+
+    <div class="grid">
+      @for (product of products; track product.id) {
+        <ion-card class="product-card">
+          <img [src]="product.thumbnail" [alt]="product.title" />
+          <ion-card-header>
+            <ion-card-subtitle>
+              {{ product.brand || 'Sin marca' }} · {{ product.category }}
+            </ion-card-subtitle>
+            <ion-card-title>{{ product.title }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <p class="price">{{ product.price | currency:'EUR' }}</p>
+            <p>⭐ {{ product.rating }} · Stock: {{ product.stock }}</p>
+          </ion-card-content>
+        </ion-card>
+      }
+    </div>
+
+    <div class="pagination">
+      <ion-button class="page-btn"  fill="outline" [disabled]="page === 1" (click)="goToPage(page - 1)">
         Anterior
       </ion-button>
-      <span>Página {{ page() }} de {{ totalPages() }}</span>
-      <ion-button fill="outline" [disabled]="page() === totalPages()" (click)="goToPage(page() + 1)">
+      <span>Página {{ page }} de {{ totalPages }}</span>
+      <ion-button class="page-btn" fill="outline" [disabled]="page === totalPages" (click)="goToPage(page + 1)">
         Siguiente
       </ion-button>
     </div>

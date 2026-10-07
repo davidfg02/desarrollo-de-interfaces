@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit, signal, viewChild } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 import {
   IonBackButton,
@@ -27,51 +27,55 @@ import { ThemeToggle } from '../../components/theme-toggle/theme-toggle.componen
     CurrencyPipe,
     IonContent, IonHeader, IonTitle, IonToolbar,
     IonButtons, IonBackButton, IonButton, IonSpinner,
-    IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, ThemeToggle
+    IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent,
+    ThemeToggle,
   ],
 })
 export class ProductosPage implements OnInit {
   private productService = inject(ProductService);
-  private content = viewChild(IonContent);
+
+  @ViewChild(IonContent) content?: IonContent;
 
   readonly pageSize = 12;
 
-  products = signal<Product[]>([]);
-  total = signal(0);
-  page = signal(1);
-  loading = signal(false);
-  error = signal('');
+  products: Product[] = [];
+  total = 0;
+  page = 1;
+  loading = false;
+  error = '';
 
-  totalPages = computed(() => Math.max(1, Math.ceil(this.total() / this.pageSize)));
+  get totalPages(): number {
+    return Math.max(1, Math.ceil(this.total / this.pageSize));
+  }
 
   ngOnInit(): void {
     this.loadProducts();
   }
 
   loadProducts(): void {
-    this.loading.set(true);
-    this.error.set('');
+    this.loading = true;
+    this.error = '';
 
-    const skip = (this.page() - 1) * this.pageSize;
+    const skip = (this.page - 1) * this.pageSize;
 
     this.productService.getProducts(this.pageSize, skip).subscribe({
       next: (response: ProductsResponse) => {
-        this.products.set(response.products);
-        this.total.set(response.total);
-        this.loading.set(false);
+        this.products = response.products;
+        this.total = response.total;
+        this.loading = false;
       },
       error: (err) => {
         console.error(err);
-        this.error.set('No se han podido cargar los productos.');
-        this.loading.set(false);
+        this.error = 'No se han podido cargar los productos.';
+        this.loading = false;
       },
     });
   }
 
   goToPage(page: number): void {
-    if (page < 1 || page > this.totalPages() || page === this.page()) return;
-    this.page.set(page);
+    if (page < 1 || page > this.totalPages || page === this.page) return;
+    this.page = page;
     this.loadProducts();
-    this.content()?.scrollToTop(300);
+    this.content?.scrollToTop(300);
   }
 }
