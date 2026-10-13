@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, computed, inject, OnInit, signal, viewChild } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 import {
   IonBackButton,
@@ -34,48 +34,48 @@ import { ThemeToggle } from '../../components/theme-toggle/theme-toggle.componen
 export class ProductosPage implements OnInit {
   private productService = inject(ProductService);
 
-  @ViewChild(IonContent) content?: IonContent;
+  readonly content = viewChild(IonContent);
 
   readonly pageSize = 12;
 
-  products: Product[] = [];
-  total = 0;
-  page = 1;
-  loading = false;
-  error = '';
+  readonly products = signal<Product[]>([]);
+  readonly total = signal(0);
+  readonly page = signal(1);
+  readonly loading = signal(false);
+  readonly error = signal('');
 
-  get totalPages(): number {
-    return Math.max(1, Math.ceil(this.total / this.pageSize));
-  }
+  readonly totalPages = computed(() =>
+    Math.max(1, Math.ceil(this.total() / this.pageSize))
+  );
 
   ngOnInit(): void {
     this.loadProducts();
   }
 
   loadProducts(): void {
-    this.loading = true;
-    this.error = '';
+    this.loading.set(true);
+    this.error.set('');
 
-    const skip = (this.page - 1) * this.pageSize;
+    const skip = (this.page() - 1) * this.pageSize;
 
     this.productService.getProducts(this.pageSize, skip).subscribe({
       next: (response: ProductsResponse) => {
-        this.products = response.products;
-        this.total = response.total;
-        this.loading = false;
+        this.products.set(response.products);
+        this.total.set(response.total);
+        this.loading.set(false);
       },
       error: (err) => {
         console.error(err);
-        this.error = 'No se han podido cargar los productos.';
-        this.loading = false;
+        this.error.set('No se han podido cargar los productos.');
+        this.loading.set(false);
       },
     });
   }
 
   goToPage(page: number): void {
-    if (page < 1 || page > this.totalPages || page === this.page) return;
-    this.page = page;
+    if (page < 1 || page > this.totalPages() || page === this.page()) return;
+    this.page.set(page);
     this.loadProducts();
-    this.content?.scrollToTop(300);
+    this.content()?.scrollToTop(300);
   }
 }

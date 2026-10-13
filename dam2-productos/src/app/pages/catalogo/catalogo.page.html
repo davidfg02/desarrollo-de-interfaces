@@ -10,24 +10,24 @@
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
- <!--  @if (loading) {
+  <!--  @if (loading) {
   <div class="loading-container" style="text-align: center; padding: 2rem;">
     <ion-spinner name="crescent"></ion-spinner>
     <p>Conectando con Jsonplaceholder API...</p>
 
   </div>
   } -->
-  @if (error) {
+  @if (error()) {
   <ion-card color="danger">
     <ion-card-header>
       <ion-card-title>Fallo de Red</ion-card-title>
     </ion-card-header>
-    <ion-card-content>{{ error }}</ion-card-content>
+    <ion-card-content>{{ error() }}</ion-card-content>
   </ion-card>
   }
-  @if (!loading && !error) {
+  @if (!loading() && !error()) {
   <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem;">
-    @for (photo of photos; track photo.id) {
+    @for (photo of photos(); track photo.id) {
     <ion-card>
       <img [src]="photo.url" [alt]="photo.title" style="height: 200px; object-fit: cover; width: 100%;" />
       <ion-card-header>

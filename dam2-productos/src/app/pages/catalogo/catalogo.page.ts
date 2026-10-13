@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import {
   IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonBackButton,
   IonSpinner, IonCard, IonCardHeader, IonCardTitle, IonCardContent
@@ -15,16 +15,16 @@ import { ThemeToggle } from '../../components/theme-toggle/theme-toggle.componen
   standalone: true,
   imports: [
     IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonBackButton,
-    IonSpinner, IonCard, IonCardHeader, IonCardTitle, IonCardContent,
+    IonCard, IonCardHeader, IonCardTitle, IonCardContent,
     ThemeToggle
   ]
 })
 export class CatalogoPage implements OnInit {
   private photosService = inject(PhotosService);
 
-  photos: PhotosProduct[] = [];
-  loading = true;
-  error = '';
+  readonly photos = signal<PhotosProduct[]>([]);
+  readonly loading = signal(true);
+  readonly error = signal('');
 
   ngOnInit() {
     this.fetchProducts();
@@ -32,14 +32,12 @@ export class CatalogoPage implements OnInit {
 
   fetchProducts() {
     this.photosService.getPhotosProducts()
-      .pipe(finalize(() => (this.loading = false)))
+      .pipe(finalize(() => this.loading.set(false)))
       .subscribe({
-        next: (data) => {
-          this.photos = data;
-        },
+        next: (data) => this.photos.set(data),
         error: (err) => {
           console.error(err);
-          this.error = 'Error crítico al conectar con la API';
+          this.error.set('Error crítico al conectar con la API');
         }
       });
   }

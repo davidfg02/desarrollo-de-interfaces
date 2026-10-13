@@ -13,33 +13,33 @@
 <ion-content class="ion-padding">
   <h1>Listado de productos</h1>
 
-  @if (loading) {
+  @if (loading()) {
     <div class="loading">
       <ion-spinner></ion-spinner>
       <p>Cargando productos...</p>
     </div>
   }
 
-  @if (error) {
+  @if (error()) {
     <ion-card>
       <ion-card-header>
         <ion-card-title>Error</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <p>{{ error }}</p>
+        <p>{{ error() }}</p>
         <ion-button (click)="loadProducts()">Reintentar</ion-button>
       </ion-card-content>
     </ion-card>
   }
 
-  @if (!loading && !error) {
+  @if (!loading() && !error()) {
     <p>
-      Mostrando <strong>{{ products.length }}</strong> de
-      <strong>{{ total }}</strong> productos
+      Mostrando <strong>{{ products().length }}</strong> de
+      <strong>{{ total() }}</strong> productos
     </p>
 
     <div class="grid">
-      @for (product of products; track product.id) {
+      @for (product of products(); track product.id) {
         <ion-card class="product-card">
           <img [src]="product.thumbnail" [alt]="product.title" />
           <ion-card-header>
@@ -57,11 +57,11 @@
     </div>
 
     <div class="pagination">
-      <ion-button class="page-btn"  fill="outline" [disabled]="page === 1" (click)="goToPage(page - 1)">
+      <ion-button class="page-btn"  fill="outline" [disabled]="page() === 1" (click)="goToPage(page() - 1)">
         Anterior
       </ion-button>
-      <span>Página {{ page }} de {{ totalPages }}</span>
-      <ion-button class="page-btn" fill="outline" [disabled]="page === totalPages" (click)="goToPage(page + 1)">
+      <span>Página {{ page() }} de {{ totalPages() }}</span>
+      <ion-button class="page-btn" fill="outline" [disabled]="page === totalPages" (click)="goToPage(page() + 1)">
         Siguiente
       </ion-button>
     </div>
