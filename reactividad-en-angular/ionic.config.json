@@ -1,0 +1,7 @@
+{
+  "name": "reactividad-en-angular",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
