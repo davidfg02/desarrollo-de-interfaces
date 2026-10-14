@@ -10,4 +10,15 @@
       <ion-title size="large">contacto</ion-title>
     </ion-toolbar>
   </ion-header>
+  <ion-item>
+    <ion-input [(ngModel)]="correo" placeholder="Correo">
+    </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-textarea [(ngModel)]="mensaje">
+    </ion-textarea>
+  </ion-item>
+  <ion-button (click)="enviar()">
+    Enviar
+  </ion-button>
 </ion-content>

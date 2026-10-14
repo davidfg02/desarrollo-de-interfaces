@@ -10,4 +10,16 @@
       <ion-title size="large">nosotros</ion-title>
     </ion-toolbar>
   </ion-header>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Nuestra empresa</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      Empresa especializada en soluciones basadas en Angular, Ionic y Node.js.
+      @if (info(); as i) {
+      <p>Tu ubicación: {{ i.latitud | number:'1.4-4' }}, {{ i.longitud | number:'1.4-4' }}</p>
+      <p>Distancia a nuestras oficinas: {{ i.distancia | number:'1.1-1' }} km</p>
+      }
+    </ion-card-content>
+  </ion-card>
 </ion-content>
