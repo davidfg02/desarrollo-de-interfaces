@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="toggleDark()" aria-label="Cambiar modo oscuro">
+        <ion-icon slot="icon-only" [name]="isDark() ? 'sunny-outline' : 'moon-outline'"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Formulario</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
+    <ion-list lines="full">
+      <!-- Campo Nombre -->
+      <ion-item>
+        <ion-input label="Nombre completo" labelPlacement="floating" type="text" formControlName="nombre"
+          [errorText]="'El nombre es obligatorio (mín. 3 caracteres).'">
+        </ion-input>
+      </ion-item>
+      <!-- Campo Email con teclado específico para móviles -->
+      <ion-item>
+        <ion-input label="Correo Electrónico" labelPlacement="floating" type="email" inputmode="email"
+          formControlName="email" [errorText]="'Introduzca un email válido.'">
+        </ion-input>
+      </ion-item>
+      <!-- Campo Contraseña -->
+      <ion-item>
+        <ion-input label="Contraseña" labelPlacement="floating" type="password" formControlName="password"
+          [errorText]="'Mínimo 8 caracteres, letras y números.'">
+        </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-datetime label="Calendario" labelPlacement="floating" formControlName="fecha" min="2026-10-20"
+          presentation="date">
+        </ion-datetime>
+      </ion-item>
+    </ion-list>
+    <div class="ion-padding-top">
+  <ion-button expand="block" type="submit" [disabled]="registroForm.invalid || isSubmitting()">
+    @if (!isSubmitting()) {
+      <span>Registrarse</span>
+    } @else {
+      <ion-spinner name="crescent"></ion-spinner>
+    }
+  </ion-button>
+
+  <ion-button expand="block" fill="outline" type="button"
+    [disabled]="!datosEnviados()" (click)="descargarPdf()">
+    <ion-icon slot="start" name="download-outline"></ion-icon>
+    Descargar PDF
+  </ion-button>
+
+  <ion-alert header="Formulario enviado correctamente" message="Tus datos se han procesado correctamente."
+    [buttons]="submit" [isOpen]="mostrarAlerta" (didDismiss)="mostrarAlerta = false">
+  </ion-alert>
+</div>
+  </form>
+</ion-content>
