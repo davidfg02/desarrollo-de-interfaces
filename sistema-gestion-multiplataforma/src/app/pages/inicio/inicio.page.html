@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start"><ion-menu-button></ion-menu-button></ion-buttons>
+    <ion-title>
+      <h1>Inicio</h1>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" size-sm="6">
+        <app-widget-estadistico titulo="Recursos disponibles" [valor]="recursos.length" descripcion="Total en catálogo"
+          (pulsado)="alPulsarWidget('Recursos disponibles')"></app-widget-estadistico>
+      </ion-col>
+      <ion-col size="12" size-sm="6">
+        <app-widget-estadistico titulo="Precio medio" [valor]="precioMedio" descripcion="En euros"
+          (pulsado)="alPulsarWidget('Precio medio')"></app-widget-estadistico>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <app-tabla-datos descripcion="Catálogo de recursos" [columnas]="columnas" [datos]="recursos"
+          (filaSeleccionada)="alSeleccionarFila($event)"></app-tabla-datos>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <p role="status">{{ ultimaInteraccion }}</p>
+</ion-content>

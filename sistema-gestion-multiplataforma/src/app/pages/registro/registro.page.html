@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start"><ion-menu-button></ion-menu-button></ion-buttons>
+    <ion-title><h1>Registro</h1></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12" size-md="8" size-lg="5">
+        <form [formGroup]="form" (ngSubmit)="registrar()" aria-label="Formulario de registro">
+          <ion-item>
+            <ion-input label="Nombre" labelPlacement="floating" autocomplete="name"
+                       formControlName="nombre" aria-required="true"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-input label="Correo" labelPlacement="floating" type="email" autocomplete="email"
+                       formControlName="email" aria-required="true"
+                       [attr.aria-invalid]="form.controls.email.touched && form.controls.email.invalid"
+                       [attr.aria-describedby]="form.controls.email.touched && form.controls.email.errors ? 'error-email' : null"></ion-input>
+          </ion-item>
+          <div role="status">
+            @if (form.controls.email.pending) { <p>Comprobando correo...</p> }
+          </div>
+          @if (form.controls.email.touched && form.controls.email.errors) {
+            <ion-text color="danger" role="alert" id="error-email">
+              @if (form.controls.email.hasError('required')) { <p>El correo es obligatorio</p> }
+              @if (form.controls.email.hasError('email')) { <p>Formato de correo no válido</p> }
+              @if (form.controls.email.hasError('emailExiste')) { <p>Este correo ya está registrado</p> }
+            </ion-text>
+          }
+
+          <ion-item>
+            <ion-input label="Contraseña" labelPlacement="floating" type="password" autocomplete="new-password"
+                       formControlName="password" aria-required="true"
+                       [attr.aria-invalid]="form.controls.password.touched && form.controls.password.invalid"
+                       [attr.aria-describedby]="form.controls.password.touched && form.controls.password.errors ? 'error-password' : null"></ion-input>
+          </ion-item>
+          @if (form.controls.password.touched && form.controls.password.errors) {
+            <ion-text color="danger" role="alert" id="error-password"><p>Mínimo 6 caracteres</p></ion-text>
+          }
+
+          @if (error) {
+            <ion-text color="danger" role="alert"><p>{{ error }}</p></ion-text>
+          }
+
+          <ion-button type="submit" expand="block" [disabled]="form.invalid || form.pending">Registrarme</ion-button>
+          <ion-button fill="clear" expand="block" routerLink="/login">Ya tengo cuenta</ion-button>
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

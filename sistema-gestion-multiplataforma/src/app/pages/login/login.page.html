@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start"><ion-menu-button></ion-menu-button></ion-buttons>
+    <ion-title>
+      <h1>Iniciar sesión</h1>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12" size-md="8" size-lg="5">
+        <form #f="ngForm" (ngSubmit)="entrar()" aria-label="Formulario de inicio de sesión">
+          <ion-item>
+            <ion-input label="Correo" labelPlacement="floating" type="email" autocomplete="email" name="email"
+              [(ngModel)]="email" required email aria-required="true"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input label="Contraseña" labelPlacement="floating" type="password" autocomplete="current-password"
+              name="password" [(ngModel)]="password" required aria-required="true"></ion-input>
+          </ion-item>
+
+          @if (error) {
+          <ion-text color="danger" role="alert">
+            <p>{{ error }}</p>
+          </ion-text>
+          }
+
+          <ion-button type="submit" expand="block" [disabled]="f.invalid">Entrar</ion-button>
+          <ion-button fill="clear" expand="block" routerLink="/registro">Crear cuenta</ion-button>
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

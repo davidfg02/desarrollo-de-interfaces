@@ -1,0 +1,30 @@
+<ion-app>
+  <ion-split-pane contentId="main-content">
+    <ion-menu contentId="main-content">
+      <ion-header>
+        <ion-toolbar><ion-title>Oposiciones</ion-title></ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <nav aria-label="Menú principal">
+          <ion-list>
+            @if (auth.perfil$ | async; as perfil) {
+              <ion-menu-toggle auto-hide="false">
+                <ion-item button routerLink="/inicio" routerDirection="root">Inicio</ion-item>
+                @if (perfil.rol === 'admin') {
+                  <ion-item button routerLink="/admin" routerDirection="root">Panel de administración</ion-item>
+                }
+                <ion-item button (click)="salir()">Cerrar sesión</ion-item>
+              </ion-menu-toggle>
+            } @else {
+              <ion-menu-toggle auto-hide="false">
+                <ion-item button routerLink="/login" routerDirection="root">Iniciar sesión</ion-item>
+                <ion-item button routerLink="/registro" routerDirection="root">Registro</ion-item>
+              </ion-menu-toggle>
+            }
+          </ion-list>
+        </nav>
+      </ion-content>
+    </ion-menu>
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+  </ion-split-pane>
+</ion-app>

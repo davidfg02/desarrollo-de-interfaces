@@ -1,0 +1,39 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid var(--ion-color-step-150, #d9d9d9);
+}
+
+tbody tr {
+  cursor: pointer;
+}
+
+.contenedor {
+  overflow-x: auto; /* en móvil la tabla se desplaza, no se deforma */
+}
+
+table {
+  width: 100%;
+  min-width: 30rem;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 0.5rem;
+  text-align: left;
+  border-bottom: 1px solid #c4c4c4;
+}
+
+tbody tr {
+  cursor: pointer;
+}
+
+tbody tr:focus-visible {
+  outline: 2px solid var(--ion-color-primary);
+  outline-offset: -2px;
+}

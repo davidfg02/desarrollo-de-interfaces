@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start"><ion-menu-button></ion-menu-button></ion-buttons>
+    <ion-title>
+      <h1>Cuadro de mando</h1>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  @if (cargando()) {
+  <ion-spinner name="crescent" aria-label="Cargando datos"></ion-spinner>
+  }
+  @if (error()) {
+  <ion-text color="danger" role="alert">
+    <p>{{ error() }}</p>
+  </ion-text>
+  }
+
+  <ion-item>
+    <ion-select label="Categoría" [value]="categoriaSeleccionada()" (ionChange)="alCambiarCategoria($event)">
+      @for (c of categorias(); track c) {
+      <ion-select-option [value]="c">{{ c }}</ion-select-option>
+      }
+    </ion-select>
+  </ion-item>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" size-lg="6">
+        <h2>Ingresos por recurso</h2>
+        <div class="grafico">
+          <canvas #lienzoVentas role="img" aria-label="Gráfico de barras de ingresos por recurso"></canvas>
+        </div>
+      </ion-col>
+      <ion-col size="12" size-lg="6">
+        <h2>Valoraciones (tiempo real)</h2>
+        <div class="grafico">
+          <canvas #lienzoValoraciones role="img" aria-label="Gráfico circular de valoraciones por puntuación"></canvas>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <h2>Informe de ventas</h2>
+        <div class="acciones">
+          <ion-button (click)="exportarPDF()">Exportar PDF</ion-button>
+          <ion-button (click)="exportarCSV()">Exportar CSV</ion-button>
+        </div>
+        <app-tabla-datos descripcion="Informe de ventas" [columnas]="columnas"
+          [datos]="ventasFiltradas()"></app-tabla-datos>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

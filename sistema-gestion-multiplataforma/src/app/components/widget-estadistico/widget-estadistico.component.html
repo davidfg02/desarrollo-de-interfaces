@@ -1,0 +1,9 @@
+<ion-card button (click)="pulsado.emit()">
+  <ion-card-header>
+    <ion-card-subtitle>{{ titulo() }}</ion-card-subtitle>
+    <ion-card-title>{{ valor() }}</ion-card-title>
+  </ion-card-header>
+  @if (descripcion()) {
+    <ion-card-content>{{ descripcion() }}</ion-card-content>
+  }
+</ion-card>

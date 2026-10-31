@@ -1,0 +1,86 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/**
+ * Ionic Dark Mode
+ * -----------------------------------------------------
+ * For more info, please see:
+ * https://ionicframework.com/docs/theming/dark-mode
+ */
+
+/* @import "@ionic/angular/css/palettes/dark.always.css"; */
+/* @import "@ionic/angular/css/palettes/dark.class.css"; */
+@import '@ionic/angular/css/palettes/dark.system.css';
+
+
+/* Tipografía escalable: todo en rem, respetando el tamaño del navegador */
+html {
+  font-size: 100%;
+  --ion-dynamic-font: var(--ion-default-dynamic-font);
+}
+
+/* Colores con contraste AA (mínimo 4.5:1). Los de Ionic por defecto no llegan */
+@media (prefers-color-scheme: light) {
+  :root {
+    --ion-color-primary: #1f5fd1;
+    --ion-color-primary-rgb: 31, 95, 209;
+    --ion-color-primary-contrast: #ffffff;
+    --ion-color-primary-contrast-rgb: 255, 255, 255;
+    --ion-color-primary-shade: #1b54b8;
+    --ion-color-primary-tint: #3570d6;
+
+    --ion-color-danger: #b3001b;
+    --ion-color-danger-rgb: 179, 0, 27;
+    --ion-color-danger-contrast: #ffffff;
+    --ion-color-danger-contrast-rgb: 255, 255, 255;
+    --ion-color-danger-shade: #9e0018;
+    --ion-color-danger-tint: #bb1a32;
+  }
+
+  ion-searchbar {
+    --placeholder-color: #4d4d4d;
+    --placeholder-opacity: 1;
+    --icon-color: #4d4d4d;
+  }
+}
+
+/* El título de cada página es un h1 real, con el aspecto del título de Ionic */
+ion-title h1 {
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+/* Texto solo para lectores de pantalla */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

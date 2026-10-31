@@ -1,0 +1,34 @@
+<ion-searchbar
+  placeholder="Buscar"
+  aria-label="Buscar en la tabla"
+  (ionInput)="busqueda.set($any($event).detail.value ?? '')"
+></ion-searchbar>
+<p class="sr-only" role="status">{{ filtrados().length }} resultados</p>
+
+<div class="contenedor">
+  <table [attr.aria-label]="descripcion()">
+    <thead>
+      <tr>
+        @for (c of columnas(); track c.campo) {
+          <th scope="col">{{ c.titulo }}</th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (fila of filtrados(); track $index) {
+        <tr
+          tabindex="0"
+          (click)="seleccionar(fila)"
+          (keydown.enter)="seleccionar(fila)"
+          (keydown.space)="seleccionar(fila); $event.preventDefault()"
+        >
+          @for (c of columnas(); track c.campo) {
+            <td>{{ fila[c.campo] }}</td>
+          }
+        </tr>
+      } @empty {
+        <tr><td [attr.colspan]="columnas().length">Sin resultados</td></tr>
+      }
+    </tbody>
+  </table>
+</div>
