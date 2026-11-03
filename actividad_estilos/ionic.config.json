@@ -1,0 +1,7 @@
+{
+  "name": "actividad_estilos",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

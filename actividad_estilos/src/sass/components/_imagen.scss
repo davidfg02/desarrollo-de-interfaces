@@ -1,0 +1,11 @@
+.imagen-container {
+  display: flex;
+  justify-content: center;   // centrado horizontal
+  align-items: center;       // centrado vertical
+  min-height: 60vh;          // altura sobre la que se centra
+}
+
+.imagen {
+  border: 3px solid green;
+  width: 400px;
+}
