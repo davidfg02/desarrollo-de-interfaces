@@ -8,9 +8,6 @@
 # testing
 /coverage
 
-#.env
-.env
-
 # production
 /dist
 
@@ -20,6 +17,9 @@
 .env.development.local
 .env.test.local
 .env.production.local
+.env
+.env.*
+!.env.example
 /.nx
 /.nx/cache
 /.vscode/*
