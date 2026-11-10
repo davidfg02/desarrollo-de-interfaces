@@ -3,22 +3,27 @@ import { Link } from 'react-router-dom';
 import { ClientsService } from '../services/ClientsService';
 
 export default function ClientsPage() {
-  const [clients, setClients] = useState<any[]>([]); //equivalente a signals en Angular
+  const [clients, setClients] = useState<any[]>([]);
+
   const loadClients = async () => {
     const data = await ClientsService.getClients();
     setClients(data);
   };
 
-  console.log(clients)
-  
+  const handleDelete = async (id: number) => {
+    if (!window.confirm('¿Seguro que quieres borrar este cliente?')) return;
+    await ClientsService.deleteClient(id);
+    loadClients(); // recarga la lista
+  };
+
   useEffect(() => {
-    //use = librerias tipo 'Hooks'
     loadClients();
   }, []);
+
   return (
     <div className="container mt-4">
       <h2>Clientes</h2>
-      <Link to="/new-client" className="btn btn-primary mb-3">Nuevo Cliente</Link>
+      <Link to="/addClient" className="btn btn-primary mb-3">Nuevo Cliente</Link>
       <table className="table table-bordered">
         <thead>
           <tr>
@@ -36,7 +41,14 @@ export default function ClientsPage() {
               <td>{client.name}</td>
               <td>{client.email}</td>
               <td>{client.phone}</td>
-              <td>...</td>
+              <td>
+                <Link to={`/editClient/${client.id}`} className="btn btn-sm btn-warning me-2">
+                  Editar
+                </Link>
+                <button className="btn btn-sm btn-danger" onClick={() => handleDelete(client.id)}>
+                  Borrar
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
